@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Revision Code de la route</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Permis de conduire</p>
+          <h1 id="app-title">Revision du code de la route</h1>
+          <p class="intro">
+            Entraine-toi avec les questions extraites du manuel du candidat:
+            signalisation, feux, priorites, arret, stationnement et conduite prudente.
+          </p>
+        </div>
+
+        <div class="road-scene" aria-hidden="true">
+          <div class="sun"></div>
+          <div class="sign sign-warning">!</div>
+          <div class="sign sign-stop">STOP</div>
+          <div class="road">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="Progression">
+        <article>
+          <span id="answered-count">0</span>
+          <p>questions repondues</p>
+        </article>
+        <article>
+          <span id="success-rate">0%</span>
+          <p>taux de reussite</p>
+        </article>
+        <article>
+          <span id="streak-count">0</span>
+          <p>bonnes reponses d'affilee</p>
+        </article>
+      </section>
+
+      <section class="controls" aria-label="Parametres du quiz">
+        <div class="control-group compact">
+          <label for="question-search">Numero</label>
+          <input id="question-search" type="number" min="1" max="930" placeholder="Ex: 238">
+        </div>
+        <div class="control-group">
+          <label for="category-select">Theme</label>
+          <select id="category-select">
+            <option value="all">Tous les themes</option>
+          </select>
+        </div>
+        <div class="control-group">
+          <label for="mode-select">Mode</label>
+          <select id="mode-select">
+            <option value="normal">Revision</option>
+            <option value="exam">Mini examen</option>
+            <option value="mistakes">Mes erreurs</option>
+          </select>
+        </div>
+        <button id="new-question-button" class="icon-button" type="button" title="Nouvelle question" aria-label="Nouvelle question">
+          R
+        </button>
+      </section>
+
+      <section class="quiz-panel" aria-live="polite">
+        <div class="question-meta">
+          <span id="question-theme">Theme</span>
+          <span id="question-index">Question 1</span>
+        </div>
+        <div id="errata-note" class="errata-note" hidden></div>
+        <h2 id="question-text">Chargement de la question...</h2>
+        <div id="media-panel" class="media-panel" hidden></div>
+        <div id="answer-list" class="answer-list"></div>
+        <div id="feedback" class="feedback" hidden></div>
+        <div class="quiz-actions">
+          <button id="validate-button" type="button">Valider</button>
+          <button id="next-button" type="button">Question suivante</button>
+        </div>
+      </section>
+
+      <section class="study-layout">
+        <div class="review-box">
+          <div class="section-title">
+            <h2>Fiches rapides</h2>
+            <button id="flashcard-button" type="button">Changer</button>
+          </div>
+          <article id="flashcard" class="flashcard">
+            <span>Signalisation</span>
+            <h3>Panneaux de danger</h3>
+            <p>Ils sont triangulaires a listel rouge. On ralentit, on serre a droite et on reste attentif au danger annonce.</p>
+          </article>
+        </div>
+
+        <div class="review-box">
+          <div class="section-title">
+            <h2>Objectif du jour</h2>
+          </div>
+          <div class="goal">
+            <div class="goal-ring" id="goal-ring">0/20</div>
+            <p>Reponds a 20 questions aujourd'hui. Les erreurs sont garde-es pour un entrainement cible.</p>
+            <button id="reset-button" type="button">Reinitialiser ma progression</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="questions-data.js?v=6"></script>
+    <script src="app.js?v=6"></script>
+  </body>
+</html>
