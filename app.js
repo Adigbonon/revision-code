@@ -372,6 +372,7 @@ function nextQuestion() {
 function updateStats() {
   $("#answered-count").textContent = state.stats.answered;
   $("#streak-count").textContent = state.stats.streak;
+  $("#mistake-count").textContent = state.stats.mistakes.length;
   const rate = state.stats.answered ? Math.round((state.stats.correct / state.stats.answered) * 100) : 0;
   $("#success-rate").textContent = `${rate}%`;
   $("#goal-ring").textContent = `${Math.min(state.stats.today, 20)}/20`;
