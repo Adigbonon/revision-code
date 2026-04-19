@@ -9,6 +9,8 @@
   --red: #ba2d2d;
   --blue: #2769b3;
   --yellow: #f0c849;
+  --orange: #d86d1f;
+  --teal: #0f8b8d;
   --shadow: 0 20px 50px rgba(30, 45, 65, 0.14);
 }
 
@@ -20,7 +22,8 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    linear-gradient(180deg, rgba(39, 105, 179, 0.12), transparent 32rem),
+    radial-gradient(circle at top left, rgba(240, 200, 73, 0.28), transparent 22rem),
+    linear-gradient(180deg, rgba(39, 105, 179, 0.14), transparent 32rem),
     var(--paper);
   color: var(--ink);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -55,7 +58,7 @@ input {
 
 .eyebrow {
   margin: 0 0 12px;
-  color: var(--green);
+  color: var(--orange);
   font-size: 0.9rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -73,6 +76,7 @@ h1 {
   margin-bottom: 18px;
   font-size: clamp(2.5rem, 7vw, 5.8rem);
   line-height: 0.95;
+  color: #10284c;
 }
 
 .intro {
@@ -204,6 +208,38 @@ h1 {
 
 .dashboard article {
   padding: 20px;
+  border: 0;
+  color: #fff;
+  overflow: hidden;
+  position: relative;
+}
+
+.dashboard article:nth-child(1) {
+  background: linear-gradient(135deg, #2769b3, #0f8b8d);
+}
+
+.dashboard article:nth-child(2) {
+  background: linear-gradient(135deg, #176f4d, #49a078);
+}
+
+.dashboard article:nth-child(3) {
+  background: linear-gradient(135deg, #d86d1f, #f0c849);
+  color: #2b2100;
+}
+
+.dashboard article:nth-child(4) {
+  background: linear-gradient(135deg, #ba2d2d, #e35d5b);
+}
+
+.dashboard article::after {
+  content: "";
+  position: absolute;
+  right: -24px;
+  bottom: -28px;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.22);
 }
 
 .dashboard span {
@@ -215,7 +251,8 @@ h1 {
 .dashboard p,
 .goal p {
   margin-bottom: 0;
-  color: var(--muted);
+  color: inherit;
+  opacity: 0.82;
 }
 
 .controls {
@@ -223,8 +260,8 @@ h1 {
   align-items: end;
   gap: 14px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2px solid rgba(39, 105, 179, 0.18);
   border-radius: 8px;
 }
 
@@ -283,7 +320,7 @@ input {
 button {
   cursor: pointer;
   padding: 0 18px;
-  background: var(--ink);
+  background: linear-gradient(135deg, var(--blue), var(--teal));
   color: #fff;
   font-weight: 800;
 }
@@ -300,6 +337,7 @@ button:hover {
 
 .quiz-panel {
   padding: 28px;
+  border-top: 6px solid var(--blue);
 }
 
 .question-meta,
@@ -391,17 +429,18 @@ button:hover {
 
 .answer[aria-pressed="true"] {
   border-color: var(--blue);
-  box-shadow: inset 0 0 0 2px rgba(39, 105, 179, 0.2);
+  background: #eef7ff;
+  box-shadow: inset 0 0 0 2px rgba(39, 105, 179, 0.22);
 }
 
 .answer.correct {
   border-color: var(--green);
-  background: #edf8f2;
+  background: #dff6e8;
 }
 
 .answer.wrong {
   border-color: var(--red);
-  background: #fff0ef;
+  background: #ffe1df;
 }
 
 .feedback {
@@ -414,11 +453,17 @@ button:hover {
 }
 
 .feedback.good {
-  background: #edf8f2;
+  background: #dff6e8;
+  border: 1px solid #9fdab7;
+  color: #0b4f34;
+  font-weight: 900;
 }
 
 .feedback.bad {
-  background: #fff0ef;
+  background: #ffe1df;
+  border: 1px solid #ee9b98;
+  color: #8f1d1d;
+  font-weight: 900;
 }
 
 .quiz-actions {
@@ -435,6 +480,22 @@ button:hover {
   color: var(--ink);
 }
 
+#next-button {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+#reset-button {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+#export-progress-button,
+.import-button {
+  border-color: var(--green);
+  color: var(--green);
+}
+
 .study-layout {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -443,6 +504,7 @@ button:hover {
 
 .review-box {
   padding: 22px;
+  border-top: 5px solid var(--teal);
 }
 
 .section-title h2 {
@@ -494,7 +556,7 @@ button:hover {
   min-height: 190px;
   padding: 22px;
   border-radius: 8px;
-  background: linear-gradient(135deg, #f8efe1, #eaf4ee);
+  background: linear-gradient(135deg, #fff1c7, #dff6e8);
   border: 1px solid var(--line);
 }
 
@@ -529,6 +591,8 @@ button:hover {
   height: 104px;
   border: 10px solid #dbe7f4;
   border-top-color: var(--green);
+  border-right-color: var(--yellow);
+  color: var(--green);
   border-radius: 50%;
   font-weight: 900;
 }
