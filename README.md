@@ -37,6 +37,7 @@ La Prudence Auto-ecole a signale et corrige les numeros suivants:
 - 349: a, b, d
 - 373: a, b, e
 - 414: a, c
+- 518: c
 - 584: a, b, c
 - 588: a, b, d
 - 592: b, c
