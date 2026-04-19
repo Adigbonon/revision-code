@@ -45,4 +45,5 @@ La Prudence Auto-ecole a signale et corrige les numeros suivants:
 - 634: a, b
 - 637: b
 - 681: question et choix nettoyes, reponses a, d
+- 731: question et choix nettoyes, reponses a, b, e
 # revision-code

@@ -22,6 +22,25 @@ const CORRECTED_ANSWERS = {
 };
 
 const CORRECTED_QUESTIONS = {
+  349: {
+    text: "Sur cette image Im N°1 P60",
+    answers: [
+      "Nous sommes en présence d'une ligne d'avertissement",
+      "Le véhicule bleu peut dépasser",
+      "Le véhicule rouge peut s'arrêter sur la chaussée",
+      "La ligne de rive peut être franchie"
+    ],
+    correct: ["a", "b", "d"]
+  },
+  518: {
+    text: "En cas de traitement médical en cours et pour faire un long trajet, il est préférable",
+    answers: [
+      "De modifier le traitement médical",
+      "D'arrêter le traitement médical",
+      "De se renseigner auprès de son médecin"
+    ],
+    correct: ["c"]
+  },
   681: {
     text: "Le PTAC de ma remorque est de 800kg ; le poids à vide de ma voiture est 700kg",
     answers: [
@@ -31,6 +50,17 @@ const CORRECTED_QUESTIONS = {
       "Ma remorque doit porter sa propre plaque d'immatriculation"
     ],
     correct: ["a", "d"]
+  },
+  731: {
+    text: "Le poids total autorisé en charge (P. T. A C) est inscrit sur",
+    answers: [
+      "La carte grise",
+      "La plaque de tare",
+      "La vignette fiscale",
+      "La quittance de la douane",
+      "La plaque du constructeur"
+    ],
+    correct: ["a", "b", "e"]
   }
 };
 
