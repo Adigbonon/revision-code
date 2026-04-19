@@ -224,6 +224,7 @@ function renderQuestion() {
   errataNote.textContent = "";
   renderMedia(question);
   validateButton.disabled = false;
+  validateButton.hidden = false;
   answerList.innerHTML = "";
 
   question.answers.forEach((answer, index) => {
@@ -276,6 +277,7 @@ function validateAnswer() {
 
   state.answered = true;
   validateButton.disabled = true;
+  validateButton.hidden = true;
 
   [...answerList.children].forEach((button, index) => {
     if (correctSet.has(index)) button.classList.add("correct");
