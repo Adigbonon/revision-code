@@ -61,6 +61,15 @@ const CORRECTED_QUESTIONS = {
       "La plaque du constructeur"
     ],
     correct: ["a", "b", "e"]
+  },
+  738: {
+    text: "Pour tourner à gauche sur une chaussée à sens unique, je dois",
+    answers: [
+      "Serrer ma droite et mettre le clignotant à gauche",
+      "Respecter les règles de priorité",
+      "Serrer ma gauche"
+    ],
+    correct: ["a", "b"]
   }
 };
 
