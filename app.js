@@ -8,7 +8,10 @@ const CORRECTED_ANSWERS = {
   187: ["a", "b", "c"],
   322: ["b"],
   323: ["a"],
+  341: ["a"],
+  349: ["a", "b", "d"],
   373: ["a", "b", "e"],
+  414: ["a", "c"],
   584: ["a", "b", "c"],
   588: ["a", "b", "d"],
   592: ["b", "c"],
@@ -148,8 +151,7 @@ function getQuestionPool() {
   if (modeSelect.value !== "mistakes") return base;
 
   const mistakeIds = new Set(state.stats.mistakes);
-  const mistakes = base.filter((question) => mistakeIds.has(question.number));
-  return mistakes.length ? mistakes : base;
+  return base.filter((question) => mistakeIds.has(question.number));
 }
 
 function shuffle(items) {
@@ -180,6 +182,18 @@ function startMode() {
 function startSequentialPool() {
   const pool = getQuestionPool().slice().sort((a, b) => a.number - b.number);
   state.currentPool = pool;
+  if (!pool.length) {
+    state.currentQuestion = null;
+    questionTheme.textContent = "Mes erreurs";
+    questionIndex.textContent = "";
+    questionText.textContent = "Aucune erreur à revoir";
+    answerList.innerHTML = "";
+    mediaPanel.innerHTML = "";
+    mediaPanel.hidden = true;
+    feedback.hidden = true;
+    validateButton.hidden = true;
+    return;
+  }
   state.currentQuestion = pool[0];
   state.selected = new Set();
   state.answered = false;
@@ -291,6 +305,7 @@ function validateAnswer() {
     state.stats.correct += 1;
     state.stats.streak += 1;
     state.stats.mistakes = state.stats.mistakes.filter((number) => number !== question.number);
+    state.currentPool = state.currentPool.filter((item) => item.number !== question.number || modeSelect.value !== "mistakes");
   } else {
     state.stats.streak = 0;
     if (!state.stats.mistakes.includes(question.number)) {
@@ -314,8 +329,15 @@ function validateAnswer() {
 
 function nextQuestion() {
   if (!state.exam.active) {
-    const pool = state.currentPool.length ? state.currentPool : getQuestionPool().slice().sort((a, b) => a.number - b.number);
+    const freshPool = getQuestionPool().slice().sort((a, b) => a.number - b.number);
+    const pool = modeSelect.value === "mistakes" ? freshPool : (state.currentPool.length ? state.currentPool : freshPool);
     state.currentPool = pool;
+    if (!pool.length) {
+      feedback.hidden = false;
+      feedback.className = "feedback good";
+      feedback.textContent = "Toutes les erreurs sont corrigées";
+      return;
+    }
     const currentIndex = pool.findIndex((question) => question.number === state.currentQuestion?.number);
     const nextIndex = currentIndex >= 0 ? currentIndex + 1 : 0;
     showQuestion(pool[nextIndex] || pool[0]);
