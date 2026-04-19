@@ -70,6 +70,7 @@ const $ = (selector) => document.querySelector(selector);
 const categorySelect = $("#category-select");
 const modeSelect = $("#mode-select");
 const searchInput = $("#question-search");
+const searchButton = $("#search-button");
 const questionTheme = $("#question-theme");
 const questionIndex = $("#question-index");
 const questionText = $("#question-text");
@@ -376,9 +377,18 @@ flashcardButton.addEventListener("click", () => {
   renderFlashcard();
 });
 resetButton.addEventListener("click", resetProgress);
-searchInput.addEventListener("change", () => {
+function runSearch() {
   const number = Number(searchInput.value);
   if (number > 0) goToQuestion(number);
+}
+
+searchButton.addEventListener("click", runSearch);
+searchInput.addEventListener("change", runSearch);
+searchInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    runSearch();
+  }
 });
 
 setup();

@@ -257,7 +257,17 @@ input {
 }
 
 .compact {
-  flex: 0 0 150px;
+  flex: 0 0 230px;
+}
+
+.search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+}
+
+.search-row button {
+  padding: 0 14px;
 }
 
 .status-strip {

@@ -48,7 +48,10 @@
       <section class="controls" aria-label="Parametres du quiz">
         <div class="control-group compact">
           <label for="question-search">Numero</label>
-          <input id="question-search" type="number" min="1" max="930" placeholder="Ex: 238">
+          <div class="search-row">
+            <input id="question-search" type="number" min="1" max="930" inputmode="numeric" placeholder="Ex: 238">
+            <button id="search-button" type="button">Aller</button>
+          </div>
         </div>
         <div class="control-group">
           <label for="category-select">Theme</label>
@@ -111,7 +114,7 @@
       </section>
     </main>
 
-    <script src="questions-data.js?v=6"></script>
-    <script src="app.js?v=6"></script>
+    <script src="questions-data.js?v=7"></script>
+    <script src="app.js?v=7"></script>
   </body>
 </html>
