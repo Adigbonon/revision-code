@@ -428,7 +428,9 @@ button:hover {
 
 #next-button,
 #flashcard-button,
-#reset-button {
+#reset-button,
+#export-progress-button,
+.import-button {
   background: #fff;
   color: var(--ink);
 }
@@ -445,6 +447,46 @@ button:hover {
 
 .section-title h2 {
   margin-bottom: 0;
+}
+
+.save-box {
+  grid-column: 1 / -1;
+}
+
+.save-panel {
+  display: grid;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.save-panel p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.save-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.import-button {
+  display: inline-grid;
+  place-items: center;
+  min-height: 46px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 800;
+}
+
+#import-progress-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .flashcard {

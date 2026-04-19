@@ -88,6 +88,9 @@ const newQuestionButton = $("#new-question-button");
 const flashcardButton = $("#flashcard-button");
 const flashcard = $("#flashcard");
 const resetButton = $("#reset-button");
+const saveStatus = $("#save-status");
+const exportProgressButton = $("#export-progress-button");
+const importProgressInput = $("#import-progress-input");
 
 function setup() {
   if (!questions.length) {
@@ -138,6 +141,11 @@ function refreshDay() {
 
 function saveStats() {
   localStorage.setItem("codeRevisionStats", JSON.stringify(state.stats));
+  updateSaveStatus("Progression sauvegardée sur cet appareil.");
+}
+
+function updateSaveStatus(message) {
+  if (saveStatus) saveStatus.textContent = message;
 }
 
 function getBasePool() {
@@ -255,7 +263,7 @@ function renderQuestion() {
 
 function renderMedia(question) {
   const media = [...new Set(question.media || [])];
-  const shouldShow = media.length > 0 && /image|panneau|intersection|passage|niveau|agent|vehicule|véhicule|voiture|camion|moto|schéma|schema|moteur|roues|PN\d|Im|D\d/i.test(question.text);
+  const shouldShow = media.length > 0 && /image|dessin|panneau|intersection|passage|niveau|agent|vehicule|véhicule|voiture|camion|moto|volant|mains|schéma|schema|moteur|roues|PN\d|Im|D\d/i.test(question.text);
 
   mediaPanel.innerHTML = "";
   mediaPanel.hidden = !shouldShow;
@@ -392,6 +400,55 @@ function resetProgress() {
   startMode();
 }
 
+function exportProgress() {
+  const payload = {
+    app: "revision-code-route",
+    version: 1,
+    savedAt: new Date().toISOString(),
+    stats: state.stats
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "progression-code-route.json";
+  link.click();
+  URL.revokeObjectURL(url);
+  updateSaveStatus("Progression exportée.");
+}
+
+function importProgress(file) {
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.addEventListener("load", () => {
+    try {
+      const payload = JSON.parse(reader.result);
+      if (!payload.stats || typeof payload.stats !== "object") {
+        throw new Error("Fichier invalide");
+      }
+
+      state.stats = {
+        answered: Number(payload.stats.answered) || 0,
+        correct: Number(payload.stats.correct) || 0,
+        streak: Number(payload.stats.streak) || 0,
+        mistakes: Array.isArray(payload.stats.mistakes) ? payload.stats.mistakes.map(Number).filter(Boolean) : [],
+        today: Number(payload.stats.today) || 0,
+        date: payload.stats.date || new Date().toISOString().slice(0, 10)
+      };
+      saveStats();
+      updateStats();
+      startMode();
+      updateSaveStatus("Progression importée sur cet appareil.");
+    } catch {
+      updateSaveStatus("Import impossible: fichier non reconnu.");
+    } finally {
+      importProgressInput.value = "";
+    }
+  });
+  reader.readAsText(file);
+}
+
 validateButton.addEventListener("click", validateAnswer);
 nextButton.addEventListener("click", nextQuestion);
 newQuestionButton.addEventListener("click", startMode);
@@ -402,6 +459,8 @@ flashcardButton.addEventListener("click", () => {
   renderFlashcard();
 });
 resetButton.addEventListener("click", resetProgress);
+exportProgressButton.addEventListener("click", exportProgress);
+importProgressInput.addEventListener("change", () => importProgress(importProgressInput.files[0]));
 function runSearch() {
   const number = Number(searchInput.value);
   if (number > 0) goToQuestion(number);

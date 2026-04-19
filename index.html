@@ -111,10 +111,24 @@
             <button id="reset-button" type="button">Reinitialiser ma progression</button>
           </div>
         </div>
+
+        <div class="review-box save-box">
+          <div class="section-title">
+            <h2>Sauvegarde</h2>
+          </div>
+          <div class="save-panel">
+            <p id="save-status">Progression sauvegardee sur cet appareil.</p>
+            <div class="save-actions">
+              <button id="export-progress-button" type="button">Exporter</button>
+              <label class="import-button" for="import-progress-input">Importer</label>
+              <input id="import-progress-input" type="file" accept="application/json">
+            </div>
+          </div>
+        </div>
       </section>
     </main>
 
-    <script src="questions-data.js?v=12"></script>
-    <script src="app.js?v=12"></script>
+    <script src="questions-data.js?v=14"></script>
+    <script src="app.js?v=14"></script>
   </body>
 </html>
