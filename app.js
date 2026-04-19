@@ -21,6 +21,19 @@ const CORRECTED_ANSWERS = {
   637: ["b"]
 };
 
+const CORRECTED_QUESTIONS = {
+  681: {
+    text: "Le PTAC de ma remorque est de 800kg ; le poids à vide de ma voiture est 700kg",
+    answers: [
+      "Pour tracter ma remorque je dois détenir le permis E (B)",
+      "Je dois mettre à l'arrière de ma remorque une plaque d'immatriculation identique à celle de ma voiture",
+      "Pour tracter ma remorque je dois détenir le permis C",
+      "Ma remorque doit porter sa propre plaque d'immatriculation"
+    ],
+    correct: ["a", "d"]
+  }
+};
+
 const flashcards = [
   {
     theme: "Signalisation",
@@ -117,6 +130,16 @@ function setup() {
 function applyCorrections() {
   for (const question of questions) {
     question.explain = "";
+  }
+
+  for (const question of questions) {
+    const correctedQuestion = CORRECTED_QUESTIONS[question.number];
+    if (!correctedQuestion) continue;
+
+    question.text = correctedQuestion.text;
+    question.answers = correctedQuestion.answers;
+    question.correct = correctedQuestion.correct.map((letter) => letter.toLowerCase().charCodeAt(0) - 97);
+    question.corrected = true;
   }
 
   for (const question of questions) {
