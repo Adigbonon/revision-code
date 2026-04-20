@@ -70,6 +70,16 @@ const CORRECTED_QUESTIONS = {
       "Serrer ma gauche"
     ],
     correct: ["a", "b"]
+  },
+  924: {
+    text: "La pré-signalisation doit être indiquée par",
+    answers: [
+      "Les plaques d'immatriculation",
+      "Les feux de croisement",
+      "Le signal de détresse",
+      "Le triangle de pré-signalisation"
+    ],
+    correct: ["c", "d"]
   }
 };
 
