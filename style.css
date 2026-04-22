@@ -355,6 +355,43 @@ button:hover {
   font-weight: 800;
 }
 
+.exam-progress {
+  margin-top: 16px;
+  padding: 14px;
+  border: 1px solid rgba(39, 105, 179, 0.22);
+  border-radius: 8px;
+  background: #eef7ff;
+}
+
+.exam-progress[hidden] {
+  display: none;
+}
+
+.exam-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #174a80;
+  font-weight: 900;
+}
+
+.exam-progress-track {
+  height: 12px;
+  margin-top: 10px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #cfe2f5;
+}
+
+.exam-progress-track span {
+  display: block;
+  width: 0%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--blue), var(--green), var(--yellow));
+  transition: width 180ms ease;
+}
+
 .errata-note {
   margin-top: 16px;
   padding: 12px 14px;
@@ -511,11 +548,13 @@ button:hover {
   margin-bottom: 0;
 }
 
-.save-box {
+.save-box,
+.review-themes-box {
   grid-column: 1 / -1;
 }
 
-.save-panel {
+.save-panel,
+.review-themes-list {
   display: grid;
   gap: 16px;
   margin-top: 18px;
@@ -524,6 +563,49 @@ button:hover {
 .save-panel p {
   margin-bottom: 0;
   color: var(--muted);
+}
+
+.review-themes-list {
+  gap: 10px;
+}
+
+.review-themes-list p {
+  margin-bottom: 0;
+  color: var(--muted);
+}
+
+.theme-review-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-left: 6px solid var(--red);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.theme-review-item strong {
+  display: block;
+}
+
+.theme-review-item span {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.theme-review-count {
+  display: grid;
+  place-items: center;
+  min-width: 46px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #ffe1df;
+  color: var(--red);
+  font-weight: 900;
 }
 
 .save-actions {
@@ -614,6 +696,7 @@ button:hover {
   .controls,
   .status-strip,
   .question-meta,
+  .exam-progress-meta,
   .quiz-actions,
   .section-title {
     align-items: stretch;

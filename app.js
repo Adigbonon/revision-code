@@ -1,6 +1,6 @@
 const bank = window.PDF_QUESTION_BANK || { count: 0, missing: [], questions: [] };
 const questions = bank.questions;
-const EXAM_SIZE = 40;
+const EXAM_SIZE = 20;
 const ERROR_QUESTION_NUMBERS = new Set([123, 135, 187, 322, 323, 373, 584, 588, 592, 627, 634, 637]);
 const CORRECTED_ANSWERS = {
   123: ["a", "c"],
@@ -144,6 +144,10 @@ const answerList = $("#answer-list");
 const feedback = $("#feedback");
 const errataNote = $("#errata-note");
 const mediaPanel = $("#media-panel");
+const examProgress = $("#exam-progress");
+const examProgressText = $("#exam-progress-text");
+const examScoreText = $("#exam-score-text");
+const examProgressFill = $("#exam-progress-fill");
 const validateButton = $("#validate-button");
 const nextButton = $("#next-button");
 const newQuestionButton = $("#new-question-button");
@@ -153,6 +157,7 @@ const resetButton = $("#reset-button");
 const saveStatus = $("#save-status");
 const exportProgressButton = $("#export-progress-button");
 const importProgressInput = $("#import-progress-input");
+const reviewThemesList = $("#review-themes-list");
 
 function setup() {
   if (!questions.length) {
@@ -267,6 +272,7 @@ function startSequentialPool() {
     state.currentQuestion = null;
     questionTheme.textContent = "Mes erreurs";
     questionIndex.textContent = "";
+    updateExamStatus();
     questionText.textContent = "Aucune erreur à revoir";
     answerList.innerHTML = "";
     mediaPanel.innerHTML = "";
@@ -311,15 +317,19 @@ function renderQuestion() {
   if (!question) return;
 
   questionTheme.textContent = question.theme;
-  questionIndex.textContent = `Question ${question.number}`;
+  questionIndex.textContent = state.exam.active
+    ? `Question ${state.exam.position + 1}/${state.exam.questions.length}`
+    : `Question ${question.number}`;
   questionText.textContent = question.text;
   feedback.hidden = true;
   feedback.className = "feedback";
   errataNote.hidden = true;
   errataNote.textContent = "";
   renderMedia(question);
+  updateExamStatus();
   validateButton.disabled = false;
   validateButton.hidden = false;
+  nextButton.hidden = false;
   answerList.innerHTML = "";
 
   question.answers.forEach((answer, index) => {
@@ -403,6 +413,10 @@ function validateAnswer() {
   feedback.classList.add(isCorrect ? "good" : "bad");
   feedback.textContent = isCorrect ? "Bonne réponse" : "Mauvaise réponse";
 
+  if (state.exam.active && state.exam.position + 1 >= state.exam.questions.length) {
+    showExamResult();
+  }
+
   saveStats();
   updateStats();
   updateExamStatus();
@@ -426,10 +440,7 @@ function nextQuestion() {
   }
 
   if (state.exam.position + 1 >= state.exam.questions.length) {
-    feedback.hidden = false;
-    feedback.className = "feedback good";
-    feedback.textContent = `Mini examen termine: ${state.exam.correct}/${state.exam.questions.length}. Relance le mode Mini examen pour une nouvelle serie.`;
-    updateExamStatus();
+    showExamResult();
     return;
   }
 
@@ -448,10 +459,67 @@ function updateStats() {
   const rate = state.stats.answered ? Math.round((state.stats.correct / state.stats.answered) * 100) : 0;
   $("#success-rate").textContent = `${rate}%`;
   $("#goal-ring").textContent = `${Math.min(state.stats.today, 20)}/20`;
+  renderReviewThemes();
+}
+
+function renderReviewThemes() {
+  if (!reviewThemesList) return;
+
+  const mistakeIds = new Set(state.stats.mistakes);
+  const themeCounts = new Map();
+  for (const question of questions) {
+    if (!mistakeIds.has(question.number)) continue;
+    themeCounts.set(question.theme, (themeCounts.get(question.theme) || 0) + 1);
+  }
+
+  const themes = [...themeCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+  reviewThemesList.innerHTML = "";
+
+  if (!themes.length) {
+    reviewThemesList.innerHTML = "<p>Aucune erreur pour le moment.</p>";
+    return;
+  }
+
+  for (const [theme, count] of themes) {
+    const item = document.createElement("div");
+    item.className = "theme-review-item";
+    item.innerHTML = `
+      <div>
+        <strong>${theme}</strong>
+        <span>${count === 1 ? "1 question à revoir" : `${count} questions à revoir`}</span>
+      </div>
+      <div class="theme-review-count">${count}</div>
+    `;
+    reviewThemesList.append(item);
+  }
 }
 
 function updateExamStatus() {
-  return;
+  if (!examProgress) return;
+
+  if (!state.exam.active || !state.exam.questions.length) {
+    examProgress.hidden = true;
+    return;
+  }
+
+  const total = state.exam.questions.length;
+  const current = Math.min(state.exam.position + 1, total);
+  const completed = Math.min(state.exam.answered, total);
+  examProgress.hidden = false;
+  examProgressText.textContent = `Question ${current}/${total}`;
+  examScoreText.textContent = `Score ${state.exam.correct}/${completed}`;
+  examProgressFill.style.width = `${Math.round((completed / total) * 100)}%`;
+}
+
+function showExamResult() {
+  const total = state.exam.questions.length;
+  const percent = total ? Math.round((state.exam.correct / total) * 100) : 0;
+  feedback.hidden = false;
+  feedback.className = percent >= 70 ? "feedback good" : "feedback bad";
+  feedback.textContent = `Résultat examen : ${state.exam.correct}/${total} (${percent}%)`;
+  nextButton.hidden = true;
+  validateButton.hidden = true;
+  updateExamStatus();
 }
 
 function renderFlashcard() {

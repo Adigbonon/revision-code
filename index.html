@@ -81,6 +81,15 @@
           <span id="question-theme">Theme</span>
           <span id="question-index">Question 1</span>
         </div>
+        <div id="exam-progress" class="exam-progress" hidden>
+          <div class="exam-progress-meta">
+            <span id="exam-progress-text">Question 1/20</span>
+            <span id="exam-score-text">Score 0/0</span>
+          </div>
+          <div class="exam-progress-track">
+            <span id="exam-progress-fill"></span>
+          </div>
+        </div>
         <div id="errata-note" class="errata-note" hidden></div>
         <h2 id="question-text">Chargement de la question...</h2>
         <div id="media-panel" class="media-panel" hidden></div>
@@ -129,10 +138,19 @@
             </div>
           </div>
         </div>
+
+        <div class="review-box review-themes-box">
+          <div class="section-title">
+            <h2>Thèmes à revoir</h2>
+          </div>
+          <div id="review-themes-list" class="review-themes-list">
+            <p>Aucune erreur pour le moment.</p>
+          </div>
+        </div>
       </section>
     </main>
 
-    <script src="questions-data.js?v=22"></script>
-    <script src="app.js?v=22"></script>
+    <script src="questions-data.js?v=25"></script>
+    <script src="app.js?v=25"></script>
   </body>
 </html>

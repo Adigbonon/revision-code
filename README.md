@@ -13,7 +13,7 @@ Ouvre `index.html` dans ton navigateur.
 - Correction immediate avec explication
 - Suivi du taux de reussite et de la serie de bonnes reponses
 - Mode `Mes erreurs` pour retravailler les questions ratees
-- Mode `Mini examen` avec 40 questions aleatoires
+- Mode `Mini examen` avec 20 questions aleatoires
 - Recherche directe par numero de question
 - Avertissement sur les questions signalees avec erreur par La Prudence Auto-ecole
 - Dessins du PDF affiches avec les questions concernees
